@@ -1,0 +1,31 @@
+name: Publish APK release
+
+on:
+  push:
+    paths:
+      - "release/*.apk"
+      - ".github/workflows/release.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create GitHub Release with APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.1
+          name: "O'zbek Keyboard 1.1"
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          files: release/Ozbek-Keyboard-1.1.apk
+          body: |
+            Yangi o'zbek alifbosi klaviaturasi (Ö Ğ Ş Ç ʼ) — Android uchun.
+
+            - Paket: `uz.offline.keyboard`, versiya 1.1
+            - Internet ruxsati yo'q (faqat `BIND_INPUT_METHOD`)
+            - SHA-256: `bfbaa9fe0ec6fb3225142cb87c995719d16b554995764586805cfcedb1142e96`
